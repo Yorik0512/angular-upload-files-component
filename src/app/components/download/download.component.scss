@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&subset=cyrillic,cyrillic-ext,latin-ext');
+
+* {
+  box-sizing: border-box;
+}
+
+$main-border-color: #e6e6e6;
+
+.ui-upload {
+  border: 1px solid $main-border-color;
+  background: #ffffff;
+  padding: 12px;
+  font-family: 'Roboto', sans-serif;
+  position: relative;
+
+  &--over {
+    background: #f9f9f9;
+  }
+
+  &__btn {
+    position: relative;
+    width: 120px;
+    height: 40px;
+    outline: 0;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    z-index: 3;
+  }
+  
+  &__status-message-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__status-message {
+    display: inline-block;
+    margin-left: 20px;
+    color: #999;
+    font-size: 14px;
+    vertical-align: middle;
+    font-weight: 300;
+    transition: all .6s;
+  }
+
+  &__btn-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 120px;
+    height: 40px;
+    display: block;
+    cursor: pointer;
+
+    &:hover + .ui-upload__btn-label {
+      background: #ebebeb;
+    }
+
+    &:active + .ui-upload__btn-label {
+      background: #dbdbdb;
+    }
+  }
+
+  &__btn-label {
+    width: 120px;
+    height: 40px;
+    display: block;
+    border-radius: 2px;
+    color: #444;
+    background: #fafafa;
+    box-shadow: 0 2px 6px rgba(0,0,0,.2), 0 2px 3px rgba(0,0,0,.05);
+    margin: 0;
+    padding: 10px 14px;
+    box-sizing: border-box;
+    text-align: center;
+    transition: all .6s;
+  }
+
+  &__files {
+    padding: 0;
+    margin: 0;
+  }
+
+  &__file {
+    list-style: none;
+    margin: -1px 0 0;
+    border: 1px solid $main-border-color;
+    padding: 0;
+    position: relative;
+  }
+  
+  &__file-progress {
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    top: 0;
+    left: 0;
+    background: blue;
+  }
+  
+  &__file-progress-bar {
+    width: 70%;
+    height: 100%;
+    display: block;
+    background: red;
+  }
+  
+  &__file-wrapper {
+    padding: 20px 40px 20px 14px;
+  }
+
+  &__file-icon {
+    width: 32px;
+    height: 42px;
+    display: block;
+    background: url('/assets/images/file-default.png');
+    float: left;
+    margin-right: 20px;
+  }
+
+  &__file-heading {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-family: 'Roboto', sans-serif;
+    padding: 2px 0;
+    margin: 0;
+    font-size: 14px;
+    display: block;
+  }
+
+  &__file-size-heading {
+    text-transform: uppercase;
+    font-family: 'Roboto', sans-serif;
+    font-style: italic;
+    font-weight: 400;
+    padding: 2px 0 0;
+    margin: 0;
+    font-size: 14px;
+    display: block;
+  }
+
+  &__file-remove {
+    display: block;
+    background: url('/assets/images/x.svg');
+    border: 0;
+    padding: 0;
+    margin: 0;
+    height: 16px;
+    width: 16px;
+    background-size: 100%;
+    position: absolute;
+    top: 20px;
+    right: 14px;
+    cursor: pointer;
+    outline: none;
+  }
+
+  &__buttons {
+
+  }
+
+  &__button {
+    position: relative;
+    height: 60px;
+    outline: 0;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    background: none;
+    text-transform: uppercase;
+    border: 1px solid $main-border-color;
+    width: 50%;
+    margin-top: -1px;
+    transition: all .6s;
+
+    &:hover {
+      background: #ebebeb;
+    }
+
+    &:last-of-type {
+      margin-left: -5px;
+      width: calc(50% + 1px);
+    }
+  }
+  
+  &__added-files-status {
+    background: red;
+    color: white;
+    padding: 10px;
+    font-family: 'Roboto', sans-serif;
+  }
+}
