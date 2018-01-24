@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UploadFileService } from '../../services/upload-file/upload-file.service';
-// import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Headers, Http, Response } from '@angular/http';
+import { HttpClient, HttpHeaders, HttpEvent, HttpParams, HttpRequest, HttpEventType} from '@angular/common/http';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-download',
@@ -13,12 +13,12 @@ export class DownloadComponent implements OnInit {
   // - remove file from files list
   // - preloader for file
   // - add colors to variables in css
-  
+
   public fileList;
   public fileStatusMessage = false;
-  public addedFilesStatus =false;
+  public addedFilesStatus = false;
 
-  constructor(private upload: UploadFileService, private httpClient: Http) { }
+  constructor(private upload: UploadFileService, private http: HttpClient) { }
 
   ngOnInit() {
   }
@@ -48,7 +48,7 @@ export class DownloadComponent implements OnInit {
   selectFile(event) {
     this.addDataToFileList(event.target.files);
   }
-  
+
   // Remove file from list.
   removeFile(event) {
     console.log(event);
