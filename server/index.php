@@ -9,37 +9,37 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $path = './uploads/';
 
-echo json_encode(
-	array(
-      'someTest' => $_FILES
-    )
-);
+if (isset($_FILES)) {
+	if (!is_writable($path)) {
+		echo json_encode(array(
+		  'status' => false,
+		  'msg'    => 'Destination directory not writable.'
+		));
+		exit;
+	}
 
-// if (isset($_FILES['file'])) {
-//   $originalName = $_FILES['file']['name'];
-//   $ext = '.'.pathinfo($originalName, PATHINFO_EXTENSION);
-//   $generatedName = md5($_FILES['file']['tmp_name']).$ext;
-//   $filePath = $path.$generatedName;
+	$responce = array();
 
-//   if (!is_writable($path)) {
-//     echo json_encode(array(
-//       'status' => false,
-//       'msg'    => 'Destination directory not writable.'
-//     ));
-//     exit;
-//   }
+	foreach ($_FILES as $key => $file) {
+		$originalName = $file['name'];
+		$ext = '.'.pathinfo($originalName, PATHINFO_EXTENSION);
+		$generatedName = md5($file['tmp_name']).$ext;
+		$filePath = $path.$generatedName;
 
-//   if (move_uploaded_file($_FILES['file']['tmp_name'], $filePath)) {
-//     echo json_encode(array(
-//       'status'        => true,
-//       'originalName'  => $originalName,
-//       'generatedName' => $generatedName
-//     ));
-//   }
-// }
-// else {
-//   echo json_encode(
-//     array('status' => false, 'msg' => 'No file uploaded.')
-//   );
-//   exit;
-// }
+		if (move_uploaded_file($file['tmp_name'], $filePath)) {
+			array_push($responce, array(
+			  'status'        => true,
+			  'originalName'  => $originalName,
+			  'generatedName' => $generatedName
+			));
+		}
+	}
+
+	echo json_encode($responce);
+}
+else {
+  echo json_encode(
+    array('status' => false, 'msg' => 'No file uploaded.')
+  );
+  exit;
+}
