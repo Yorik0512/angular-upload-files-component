@@ -64,9 +64,15 @@ export class DownloadComponent implements OnInit {
   uploadButton() {
     if (this.fileList.length > 0) {
       this.upload.uploadFile(this.fileList)
-        .subscribe(data => {
-            console.log(data);
-            return data;
+        .subscribe(event => {
+            if (event.type === HttpEventType.UploadProgress) {
+              const percentDone = Math.round(100 * event.loaded / event.total);
+              console.log(`File is ${percentDone}% loaded.`);
+            }
+            if (event.type === HttpEventType.Response) {
+              console.log(event.body);
+              return event.body;
+            }
           },
           (err) => {
             console.log('Upload Error:', err);

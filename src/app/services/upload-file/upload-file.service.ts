@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpEvent, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpEvent, HttpParams, HttpRequest} from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
@@ -27,9 +27,6 @@ export class UploadFileService {
    *   Observable.
    */
   uploadFile(filesData): Observable<HttpEvent<any>> {
-    // https://embed.plnkr.co/ozZqbxIorjQW15BrDFrg/
-    // https://blog.angularindepth.com/the-new-angular-httpclient-api-9e5c85fe3361
-    // https://stackoverflow.com/questions/39932788/update-bootstrap-progress-bar-on-upload-file-angular-2
     if (filesData.length > 0) {
       const formData = new FormData();
       for (let i = 0; i < filesData.length; i++) {
@@ -41,10 +38,10 @@ export class UploadFileService {
       const options = {
         headers,
         params,
-        requestProgress: true
+        reportProgress: true
       };
-      return this.httpClient.post(UploadFileService.filesListEndpoint, formData, options)
-        .catch(error => Observable.throw(error));
+      const req = new HttpRequest('POST', UploadFileService.filesListEndpoint, formData, options);
+      return this.httpClient.request(req).catch(error => Observable.throw(error));
     }
   }
 }
