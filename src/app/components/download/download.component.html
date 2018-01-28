@@ -1,7 +1,3 @@
-<!--<a href="https://demos.telerik.com/kendo-ui/upload/templates">https://demos.telerik.com/kendo-ui/upload/templates</a>-->
-<!--https://developer.mozilla.org/en-US/docs/Web/Events/dragexit-->
-<!--https://stackoverflow.com/questions/40214772/file-upload-in-angular#answer-47597472-->
-
 <div
   class="ui-upload-wrapper"
   (dragover)="onDragOverFile($event)"
@@ -9,7 +5,7 @@
   (dragleave)="onDragLeaveFile($event)">
   <div
     class="ui-upload"
-    [ngClass]="{'ui-upload--over': fileStatusMessage}">
+    [ngClass]="{'ui-upload--over': fileMessageOnDragOverFlag}">
     <div class="ui-upload__btn">
       <input
         type="file"
@@ -19,31 +15,39 @@
         data-role="upload"
         multiple="multiple"
         autocomplete="off"
-        (change)="selectFile($event)">
+        (change)="selectFile($event)"
+        (click)="clickOnSelector()">
       <span class="ui-upload__btn-label">Select files...</span>
     </div>
     <div class="ui-upload__status-message-wrapper"></div>
     <div
       class="ui-upload__status-message"
-      *ngIf="fileStatusMessage">Drop files here to upload</div>
+      *ngIf="fileMessageOnDragOverFlag">Drop files here to upload</div>
   </div>
   <ul class="ui-upload__files">
     <li
       class="ui-upload__file"
       *ngFor="let file of fileList">
       <div class="ui-upload__file-progress">
-        <div class="ui-upload__file-progress-bar"></div>
+        <div
+          class="ui-upload__file-progress-bar"
+          [style.width]="progressFileUpload + '%'"
+          *ngIf="progressFileUpload > 0"></div>
       </div>
       <div class="ui-upload__file-wrapper">
         <span class="ui-upload__file-icon"></span>
         <h4 class="ui-upload__file-heading">Name: {{file.name}}</h4>
         <h4 class="ui-upload__file-size-heading">Size: {{file.size}} bytes</h4>
-        <button type="button" (click)="removeFile($event)" class="ui-upload__file-remove"></button>
+        <button
+          type="button"
+          (click)="removeFile(file)"
+          class="ui-upload__file-remove"></button>
       </div>
     </li>
   </ul>
   <div
-    class="ui-upload__buttons">
+    class="ui-upload__buttons"
+    *ngIf="!disabledButtons">
     <button
       class="ui-upload__button"
       type="button"
@@ -53,7 +57,7 @@
       type="button"
       (click)="uploadButton($event)">Upload</button>
   </div>
-  <div 
-    *ngIf="addedFilesStatus"
+  <div
+    *ngIf="addedFilesStatusFlag"
     class="ui-upload__added-files-status">Please add files!</div>
 </div>
